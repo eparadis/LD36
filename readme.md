@@ -16,3 +16,7 @@ Ancient Technology
 -- agriculture
 - tech tree, like Civ
 
+# Building
+
+- `sudo apt-get install nodejs npm`
+- `npm install something`
