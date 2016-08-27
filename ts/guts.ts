@@ -1,3 +1,19 @@
+class TechItem
+{
+  private _isBuild : boolean;
+
+  constructor(preReqs: TechItem[]) {
+    this.preReqs = preReqs;
+  }
+
+  isBuilt() : boolean {
+    return false;
+  }
+
+  build() : void {
+    this._isBuilt = true;
+  }
+}
 
 class Tests
 {
@@ -9,14 +25,14 @@ class Tests
 
   treeItemWithNoPreReqsCanBeBuilt(assert) {
     var testObj = new TechItem([]);
-    testObj.Build();
+    testObj.build();
     assert.ok(testObj.isBuilt());
   }
 
   treeItemWithUnbuiltPrereqCannotBeBuilt(assert) {
     var prereq = new TechItem([]);
     var testObj = new TechItem([prereq]);
-    testObj.Build();
+    testObj.build();
     assert.ok(!testObj.isBuilt());
   }
 }
