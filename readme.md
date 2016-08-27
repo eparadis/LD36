@@ -10,10 +10,10 @@ Ancient Technology
 
 - programming game with _ancient_ programming language
 - the most _ancient_ technologies
--- fire
--- wheels
--- pottery
--- agriculture
+ - fire
+ - wheels
+ - pottery
+ - agriculture
 - tech tree, like Civ
 
 # Building
