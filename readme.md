@@ -15,6 +15,12 @@ Ancient Technology
  - pottery
  - agriculture
 - tech tree, like Civ
+ - each tech tree item applies an upgrade when built (the first time?)
+ - upgrades have canHandle() for different events and modify another object if they can
+ - prereqs
+  - other tree items
+  - game events
+  - game value thresholds
 
 # Building
 
