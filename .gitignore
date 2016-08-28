@@ -1,0 +1,8 @@
+# vim files
+*.swp
+
+# created by gulp-gh-publish as far as i can tell
+.publish/
+
+# created by npm install (?)
+node_modules/

@@ -2,6 +2,8 @@
 
 NoTrueSpaceman (eparadis)
 
+[Live Demo](https://eparadis.github.io/LD36/)
+
 # Theme
 
 Ancient Technology
@@ -26,6 +28,11 @@ Ancient Technology
 
 - `sudo apt-get install nodejs npm`
 - `npm install -g typescript`
-- `npm install` (uses `packages.json` file)
+- `sudo npm install -g gulp`
+- `npm install` (uses `packages.json` for config)
+- `gulp` (uses `gulpfile.js` for config)
 
+# Deploying
+
+- `gulp deploy`
 
