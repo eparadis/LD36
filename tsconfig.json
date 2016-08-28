@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "sourceMap": true,
+    "outDir": "build"
+  },
+  "exclude": [
+    ".publish",
+    "node_modules",
+    "dist",
+    "build",
+    "public"
+  ]
+}

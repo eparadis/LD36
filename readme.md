@@ -31,6 +31,11 @@ Ancient Technology
 - `sudo npm install -g gulp`
 - `npm install` (uses `packages.json` for config)
 - `gulp` (uses `gulpfile.js` for config)
+- `webpack`
+ - troubles? you might try:
+  - `npm install -g npm-upgrade`
+  - `npm-upgrade` (to get some newer stuff)
+
 
 # Deploying
 

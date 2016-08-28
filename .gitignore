@@ -6,3 +6,6 @@
 
 # created by npm install (?)
 node_modules/
+
+# created by webpack
+public/dist/

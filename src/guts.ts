@@ -1,9 +1,10 @@
 class TechItem
 {
-  private _isBuild : boolean;
+  private _isBuilt : boolean;
+  private _preReqs : TechItem[];
 
   constructor(preReqs: TechItem[]) {
-    this.preReqs = preReqs;
+    this._preReqs = preReqs;
   }
 
   isBuilt() : boolean {
