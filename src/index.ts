@@ -9,6 +9,7 @@ class Main
     timeCounter.attachElement(gameElement);
     var cashCounter = new Counter("dollars");
     cashCounter.attachElement(gameElement);
+    var messages = new Messages(gameElement);
 
     setInterval( () => {timeCounter.add(1);}, 1000);
 
@@ -17,11 +18,36 @@ class Main
     var robotTechItem = new TechItem([]);
     robotTechItem.addBuildAction( () => {
       cashCounter.add(-10);
-      var robot = new Robot(timeCounter, 10, () => { cashCounter.add(100); });
+      var robot = new Robot(timeCounter, 10, () => { cashCounter.add(2); });
+      messages.addMessage("Robot built! It will make 2 dollars every 10 seconds.")
     });
 
     var button = new Button(gameElement, "make a buck", techItem, cashCounter, 0);
     var robotButton = new Button( gameElement, "build a robot", robotTechItem, cashCounter, 10);
+  }
+}
+
+class Messages {
+  private messages: string[];
+  private textbox: HTMLElement;
+  constructor( parent: HTMLElement) {
+    this.messages = [];
+    var p = document.createElement("p");
+    parent.appendChild(p);
+    this.textbox = document.createElement("pre");
+    p.appendChild(this.textbox);
+    this.addMessage("Nothing has happened yet...");
+  }
+
+  addMessage( text: string) : void {
+    this.messages.push(text);
+    if( this.messages.length > 10) {
+      this.messages.shift();
+    }
+    this.textbox.textContent = "";
+    for( var i = this.messages.length - 1; i >= 0; i -= 1) {
+      this.textbox.textContent += this.messages[i] + "\n";
+    }
   }
 }
 
