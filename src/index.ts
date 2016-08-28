@@ -15,15 +15,28 @@ class Main
 
     var techItem = new TechItem([]);
     techItem.addBuildAction( () => { cashCounter.add(1); })
+    
+    var robotCount = 0;
     var robotTechItem = new TechItem([]);
     robotTechItem.addBuildAction( () => {
       cashCounter.add(-10);
       var robot = new Robot(timeCounter, 10, () => { cashCounter.add(2); });
-      messages.addMessage("Robot built! It will make 2 dollars every 10 seconds.")
+      robotCount += 1;
+      messages.addMessage(`Robot #${robotCount} built! It will make 2 dollars every 10 seconds.`);
+    });
+
+    var factoryCount = 0;
+    var factoryTechItem = new TechItem([robotTechItem]);
+    factoryTechItem.addBuildAction( () => {
+      cashCounter.add(-100);
+      var factory = new Robot(timeCounter, 100, () => { cashCounter.add(10); });
+      factoryCount += 1;
+      messages.addMessage(`Factory #${factoryCount} built! It will make 10 dollars every 100 seconds.`)
     });
 
     var button = new Button(gameElement, "make a buck", techItem, cashCounter, 0);
     var robotButton = new Button( gameElement, "build a robot", robotTechItem, cashCounter, 10);
+    var factory = new Button( gameElement, "build a factory", factoryTechItem, cashCounter, 100);
   }
 }
 
