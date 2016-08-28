@@ -14,10 +14,14 @@ class Main
 
     var techItem = new TechItem([]);
     techItem.addBuildAction( () => { cashCounter.add(1); })
+    var robotTechItem = new TechItem([]);
+    robotTechItem.addBuildAction( () => {
+      cashCounter.add(-10);
+      var robot = new Robot(timeCounter, 10, () => { cashCounter.add(100); });
+    });
 
-    var button = new Button(gameElement, "thinger", techItem);
-
-    var robot = new Robot(timeCounter, 10, () => { cashCounter.add(100); })
+    var button = new Button(gameElement, "thinger", techItem, cashCounter, 0);
+    var robotButton = new Button( gameElement, "build a robot", robotTechItem, cashCounter, 10);
   }
 }
 
@@ -40,16 +44,25 @@ class Robot {
       this.action();
       this.nextTime = time + this.period;
     }
-      
   }
 }
 
 class Button {
-  constructor( parent: HTMLElement, name: string, techItem: TechItem) {
+  constructor( parent: HTMLElement, name: string, itemToBuild: TechItem, counter: Counter, cost: number) {
     var button = document.createElement("button");
     parent.appendChild(button);
     button.innerText = name;
-    button.onclick = (event) => { techItem.build(); };
+    button.disabled = true;
+    counter.subscribe( (money) => {
+      if( money >= cost) {
+        button.disabled = false;
+      } else {
+        button.disabled = true;
+      }
+    });
+    button.onclick = (event) => {
+      itemToBuild.build();
+    };
   }
 }
 

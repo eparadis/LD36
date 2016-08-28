@@ -23,6 +23,7 @@ export class Counter {
 
   subscribe( action: (n: number) => any) {
     this._subscribers.push(action);
+    action(this._value);
   }
 
   private update() : void {
