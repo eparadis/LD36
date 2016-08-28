@@ -1,8 +1,10 @@
 /// <reference path="../typings/mocha/mocha.d.ts" />
+/// <reference path="../typings/chai/chai.d.ts" />
 
 // if we used a `default` modifier to TechItem, we wouldn't need
 // curly braces around TechItem
 import {TechItem} from '../src/TechItem';
+import {assert} from 'chai';
 
 describe('TechItem', () => {
   beforeEach( () => {
@@ -12,9 +14,7 @@ describe('TechItem', () => {
   describe('constructor', () => {
     it('TechItem starts unbuilt', () => {
       var testObj = new TechItem([]);
-      if( testObj.isBuilt() ) {
-        throw new Error('TechItem was constructed already Built');
-      }
+      assert.isNotOk(testObj.isBuilt());
     });
     //it('', ()=>{});
   });
