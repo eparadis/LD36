@@ -3,13 +3,23 @@ import {Counter} from './Counter.ts';
 
 class Main
 {
+  private cashCounter: Counter;
+  private timeCounter: Counter;
+  private messages: Messages;
+  private counts:{};
+
   constructor() {
     var gameElement = document.getElementById("game");
     var timeCounter = new Counter("seconds");
     timeCounter.attachElement(gameElement);
+    this.timeCounter = timeCounter;
     var cashCounter = new Counter("dollars");
+    this.cashCounter = cashCounter;
     cashCounter.attachElement(gameElement);
     var messages = new Messages(gameElement);
+    this.messages = messages;
+
+    this.counts = {};
 
     setInterval( () => {timeCounter.add(1);}, 1000);
 
@@ -25,19 +35,32 @@ class Main
       messages.addMessage(`Robot #${robotCount} built! It will make 2 dollars every 10 seconds.`);
     });
 
-    var factoryCount = 0;
     var factoryTechItem = new TechItem([robotTechItem]);
-    factoryTechItem.addBuildAction( () => {
-      cashCounter.add(-100);
-      var factory = new Robot(timeCounter, 100, () => { cashCounter.add(10); });
-      factoryCount += 1;
-      messages.addMessage(`Factory #${factoryCount} built! It will make 10 dollars every 100 seconds.`)
+    this.buildAThing(factoryTechItem, 100, 100, 10, "Factory");
+
+    var moonTechItem = new TechItem([robotTechItem, factoryTechItem]);
+    moonTechItem.addBuildAction( () => {
+      cashCounter.add(-1000000000);
+      var msg = "YOU BOUGHT THE MOON! THERE IS NOTHING MORE IN LIFE.";
+      alert(msg);
+      messages.addMessage(msg);
     });
 
     var button = new Button(gameElement, "make a buck", techItem, cashCounter, 0);
     var robotButton = new Button( gameElement, "build a robot", robotTechItem, cashCounter, 10);
     var factory = new Button( gameElement, "build a factory", factoryTechItem, cashCounter, 100);
+    var endOfGame = new Button( gameElement, "the moon", moonTechItem, cashCounter, 1000000000);
   }
+
+  buildAThing(techItem: TechItem, cost: number, period: number, gain: number, name: string) : void {
+    techItem.addBuildAction( () => {
+      this.cashCounter.add(-1 * cost);
+      var factory = new Robot(this.timeCounter, period, () => { this.cashCounter.add(gain); });
+      this.counts[name] += 1;
+      this.messages.addMessage(`${name} #${this.counts[name]} built! It will make ${gain} dollars every ${period} seconds.`)
+    });
+  }
+
 }
 
 class Messages {
