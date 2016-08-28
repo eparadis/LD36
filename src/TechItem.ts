@@ -2,9 +2,11 @@ export class TechItem
 {
   private _isBuilt : boolean;
   private _preReqs : TechItem[];
+  private _buildActions : Function[];
 
   constructor(preReqs: TechItem[]) {
     this._preReqs = preReqs;
+    this._buildActions = [];
   }
 
   isBuilt() : boolean {
@@ -13,6 +15,9 @@ export class TechItem
 
   build() : void {
     this._isBuilt = true;
+    for( var callback of this._buildActions) {
+      callback();
+    }
   }
   
   canBuild() : boolean {
@@ -22,6 +27,10 @@ export class TechItem
       }
     }
     return true;
+  }
+
+  addBuildAction( callback : Function) {
+    this._buildActions.push(callback);
   }
 }
 

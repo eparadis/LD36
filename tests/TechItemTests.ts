@@ -11,30 +11,37 @@ describe('TechItem', () => {
     // unused so far
   });
 
-  describe('constructor', () => {
-    it('TechItem starts unbuilt', () => {
-      var testObj = new TechItem([]);
-      assert.isNotOk(testObj.isBuilt());
-    });
-    it('TechItem can be built', ()=>{
-      var testObj = new TechItem([]);
-      testObj.build();
-      assert.ok(testObj.isBuilt());
-    });
-    it('TechItem with unbuilt prereq cannot be built', ()=>{
-      var prereq = new TechItem([]);
-      assert.notOk( prereq.isBuilt());
-      var testObj = new TechItem([prereq]);
-      assert.notOk(testObj.canBuild());
-    });
-    it('TechItem with built prereq can be built', ()=>{
-      var prereq = new TechItem([]);
-      prereq.build();
-      assert.ok( prereq.isBuilt());
-      var testObj = new TechItem([prereq]);
-      assert.ok(testObj.canBuild());
-    });
-    //it('', ()=>{});
+  it('TechItem starts unbuilt', () => {
+    var testObj = new TechItem([]);
+    assert.isNotOk(testObj.isBuilt());
   });
+  it('TechItem can be built', ()=>{
+    var testObj = new TechItem([]);
+    testObj.build();
+    assert.ok(testObj.isBuilt());
+  });
+  it('TechItem with unbuilt prereq cannot be built', ()=>{
+    var prereq = new TechItem([]);
+    assert.notOk( prereq.isBuilt());
+    var testObj = new TechItem([prereq]);
+    assert.notOk(testObj.canBuild());
+  });
+  it('TechItem with built prereq can be built', ()=>{
+    var prereq = new TechItem([]);
+    prereq.build();
+    assert.ok( prereq.isBuilt());
+    var testObj = new TechItem([prereq]);
+    assert.ok(testObj.canBuild());
+  });
+  it('build action is called when TechItem is built', ()=>{
+    var testObj = new TechItem([]);
+    var buildActionCalled = false;
+    testObj.addBuildAction( () => { buildActionCalled = true;})
+    assert.notOk(buildActionCalled);
+    testObj.build();
+    assert.ok(buildActionCalled);
+  });
+  //it('', ()=>{});
+
 });
 
