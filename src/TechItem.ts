@@ -8,11 +8,20 @@ export class TechItem
   }
 
   isBuilt() : boolean {
-    return false;
+    return this._isBuilt;
   }
 
   build() : void {
     this._isBuilt = true;
+  }
+  
+  canBuild() : boolean {
+    for( var prereq of this._preReqs) {
+      if( !prereq.isBuilt()) {
+        return false;
+      }
+    }
+    return true;
   }
 }
 

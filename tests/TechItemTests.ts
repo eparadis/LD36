@@ -16,28 +16,25 @@ describe('TechItem', () => {
       var testObj = new TechItem([]);
       assert.isNotOk(testObj.isBuilt());
     });
+    it('TechItem can be built', ()=>{
+      var testObj = new TechItem([]);
+      testObj.build();
+      assert.ok(testObj.isBuilt());
+    });
+    it('TechItem with unbuilt prereq cannot be built', ()=>{
+      var prereq = new TechItem([]);
+      assert.notOk( prereq.isBuilt());
+      var testObj = new TechItem([prereq]);
+      assert.notOk(testObj.canBuild());
+    });
+    it('TechItem with built prereq can be built', ()=>{
+      var prereq = new TechItem([]);
+      prereq.build();
+      assert.ok( prereq.isBuilt());
+      var testObj = new TechItem([prereq]);
+      assert.ok(testObj.canBuild());
+    });
     //it('', ()=>{});
   });
 });
 
-class OriginalTechItemTests
-{
-  // tech tree
-  treeItemStartsUnbuilt(assert) {
-    var testObj = new TechItem([]);
-    assert.ok(!testObj.isBuilt());
-  }
-
-  treeItemWithNoPreReqsCanBeBuilt(assert) {
-    var testObj = new TechItem([]);
-    testObj.build();
-    assert.ok(testObj.isBuilt());
-  }
-
-  treeItemWithUnbuiltPrereqCannotBeBuilt(assert) {
-    var prereq = new TechItem([]);
-    var testObj = new TechItem([prereq]);
-    testObj.build();
-    assert.ok(!testObj.isBuilt());
-  }
-}
