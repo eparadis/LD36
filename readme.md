@@ -25,4 +25,7 @@ Ancient Technology
 # Building
 
 - `sudo apt-get install nodejs npm`
-- `npm install something`
+- `npm install -g typescript`
+- `npm install` (uses `packages.json` file)
+
+

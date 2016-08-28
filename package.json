@@ -1,0 +1,13 @@
+{
+  "name": "ld36",
+  "description": "ludum dare 36 entry",
+  "version": "0.0.1",
+  "author": {
+    "name": "eparadis"
+  },
+  "main": "index.js",
+  "devDependencies": {
+    "gulp": "3.x.x",
+    "gulp-gh-pages": "^0.5.4"
+  }
+}
