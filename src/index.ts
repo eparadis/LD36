@@ -11,6 +11,16 @@ class Main
     var techItem = new TechItem([]);
     techItem.addBuildAction( () => { cashCounter.add(1); })
 
+    var button = new Button(gameElement, "thinger", techItem);
+  }
+}
+
+class Button {
+  constructor( parent: HTMLElement, name: string, techItem: TechItem) {
+    var button = document.createElement("button");
+    parent.appendChild(button);
+    button.innerText = name;
+    button.onclick = (event) => { techItem.build(); };
   }
 }
 
