@@ -8,6 +8,8 @@ class Main
     var timeCounter = new Counter(gameElement, "seconds");
     var cashCounter = new Counter(gameElement, "dollars");
 
+    setInterval( () => {timeCounter.add(1);}, 1000);
+
     var techItem = new TechItem([]);
     techItem.addBuildAction( () => { cashCounter.add(1); })
 
