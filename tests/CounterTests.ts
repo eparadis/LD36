@@ -17,6 +17,14 @@ describe('Counter', () => {
       testObj.add(1234);
       assert.include(parent.innerHTML, "1234");
     });*/
+    /*it('adding a value causes all subscribers to be called', () => {
+        var testObj = new Counter("name");
+        var subscriberCalled = false;
+        testObj.subscribe( (time) => { subscriberCalled = true; });
+        assert.notOk( subscriberCalled);
+        testObj.add(1);
+        assert.ok(subscriberCalled);
+    });*/
    
     //it('', ()=>{});
   });

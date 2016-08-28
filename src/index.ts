@@ -1,12 +1,14 @@
-import {TechItem} from './TechItem';
-import {Counter} from './Counter';
+import {TechItem} from './TechItem.ts';
+import {Counter} from './Counter.ts';
 
 class Main
 {
   constructor() {
     var gameElement = document.getElementById("game");
-    var timeCounter = new Counter(gameElement, "seconds");
-    var cashCounter = new Counter(gameElement, "dollars");
+    var timeCounter = new Counter("seconds");
+    timeCounter.attachElement(gameElement);
+    var cashCounter = new Counter("dollars");
+    cashCounter.attachElement(gameElement);
 
     setInterval( () => {timeCounter.add(1);}, 1000);
 
@@ -14,6 +16,31 @@ class Main
     techItem.addBuildAction( () => { cashCounter.add(1); })
 
     var button = new Button(gameElement, "thinger", techItem);
+
+    var robot = new Robot(timeCounter, 10, () => { cashCounter.add(100); })
+  }
+}
+
+class Robot {
+  private period: number;
+  private nextTime: number;
+  private action: Function;
+
+  constructor( counter: Counter, period: number, action: Function) {
+    counter.subscribe( (time) => { this.act(time); } );
+    this.period = period;
+    this.nextTime = -1;
+    this.action = action;
+  }
+
+  act( time: number) : void {
+    if( this.nextTime === -1 ) {
+      this.nextTime = time + this.period;
+    } else if( time >= this.nextTime) {
+      this.action();
+      this.nextTime = time + this.period;
+    }
+      
   }
 }
 
