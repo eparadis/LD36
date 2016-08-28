@@ -35,6 +35,8 @@ Ancient Technology
  - troubles? you might try:
   - `npm install -g npm-upgrade`
   - `npm-upgrade` (to get some newer stuff)
+- `npm install tsd -g`
+- `tsd install` (uses `tsd.json` for config)
 
 
 # Deploying

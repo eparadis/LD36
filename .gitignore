@@ -9,3 +9,6 @@ node_modules/
 
 # created by webpack
 public/dist/
+
+# created by tsd
+typings/
