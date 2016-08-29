@@ -82,14 +82,14 @@
 	        var doubleRobot = new TechItem_ts_1.TechItem([robotTechItem]);
 	        this.buildAThing(doubleRobot, 25, 6, 2, "Double robot", "double robot!"); // 2/6 = 0.33
 	        var factoryTechItem = new TechItem_ts_1.TechItem([robotTechItem]);
-	        this.buildAThing(factoryTechItem, 100, 100, 15, "Factory", "build a factory"); // 15/100 = 0.15
+	        this.buildAThing(factoryTechItem, 100, 100, 25, "Factory", "build a factory"); // 25/100 = 0.25
 	        var sweatshop = new TechItem_ts_1.TechItem([factoryTechItem]);
 	        this.buildAThing(sweatshop, 500, 28, 28, "Sweatshop", "sweatshop"); // 28/28 = 1.0
 	        var twodollar = new TechItem_ts_1.TechItem([sweatshop]);
 	        twodollar.addBuildAction(function () { cashCounter.add(2); });
 	        new Button(gameElement, "make two bucks; bank >=", twodollar, cashCounter, 1000); // ~250/10 = ~25.0
 	        var smallIsland = new TechItem_ts_1.TechItem([factoryTechItem]);
-	        this.buildAThing(smallIsland, 16000, 150, 2100, "Small island nation", "small island nation"); // 2100/150 = 14.0
+	        this.buildAThing(smallIsland, 16000, 13, 210, "Small island nation", "small island nation"); // 210/13 = 16.2
 	        var govt = new TechItem_ts_1.TechItem([factoryTechItem]);
 	        this.buildAThing(govt, 100000, 3, 600, "Corrupt official", "bribe an official"); // 2100/3 = 200
 	        var benjamin = new TechItem_ts_1.TechItem([govt]);
@@ -97,12 +97,12 @@
 	        new Button(gameElement, "make a benjamin", benjamin, cashCounter, 0); // ~10000/10 = 1000.0
 	        var moonTechItem = new TechItem_ts_1.TechItem([robotTechItem, factoryTechItem]);
 	        moonTechItem.addBuildAction(function () {
-	            cashCounter.add(-1000000000);
+	            cashCounter.add(-1000000);
 	            var msg = "YOU BOUGHT THE MOON! THERE IS NOTHING MORE IN LIFE.";
 	            alert(msg);
 	            messages.addMessage(msg);
 	        });
-	        new Button(gameElement, "the moon", moonTechItem, cashCounter, 1000000000);
+	        new Button(gameElement, "the moon", moonTechItem, cashCounter, 1000000);
 	    }
 	    Main.prototype.buildAThing = function (techItem, cost, period, gain, name, buttonText) {
 	        var _this = this;
