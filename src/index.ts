@@ -7,9 +7,11 @@ class Main
   private timeCounter: Counter;
   private messages: Messages;
   private counts:{};
+  private gameElement: HTMLElement;
 
   constructor() {
     var gameElement = document.getElementById("game");
+    this.gameElement = gameElement;
     var timeCounter = new Counter("seconds");
     timeCounter.attachElement(gameElement);
     this.timeCounter = timeCounter;
@@ -24,19 +26,17 @@ class Main
     setInterval( () => {timeCounter.add(1);}, 1000);
 
     var techItem = new TechItem([]);
-    techItem.addBuildAction( () => { cashCounter.add(1); })
-    
-    var robotCount = 0;
-    var robotTechItem = new TechItem([]);
-    robotTechItem.addBuildAction( () => {
-      cashCounter.add(-10);
-      var robot = new Robot(timeCounter, 10, () => { cashCounter.add(2); });
-      robotCount += 1;
-      messages.addMessage(`Robot #${robotCount} built! It will make 2 dollars every 10 seconds.`);
-    });
+    techItem.addBuildAction( () => { cashCounter.add(1); });
+    var button = new Button(gameElement, "make a buck", techItem, cashCounter, 0);
+
+    var robotTechItem = new TechItem([]); 
+    this.buildAThing(robotTechItem, 10, 10, 2, "Robot", "build a robot");
+
+    var doubleRobot = new TechItem([robotTechItem]);
+    this.buildAThing(doubleRobot, 25, 18, 5, "Double robot", "double robot!");
 
     var factoryTechItem = new TechItem([robotTechItem]);
-    this.buildAThing(factoryTechItem, 100, 100, 10, "Factory");
+    this.buildAThing(factoryTechItem, 100, 100, 10, "Factory", "build a factory");
 
     var moonTechItem = new TechItem([robotTechItem, factoryTechItem]);
     moonTechItem.addBuildAction( () => {
@@ -45,20 +45,20 @@ class Main
       alert(msg);
       messages.addMessage(msg);
     });
-
-    var button = new Button(gameElement, "make a buck", techItem, cashCounter, 0);
-    var robotButton = new Button( gameElement, "build a robot", robotTechItem, cashCounter, 10);
-    var factory = new Button( gameElement, "build a factory", factoryTechItem, cashCounter, 100);
-    var endOfGame = new Button( gameElement, "the moon", moonTechItem, cashCounter, 1000000000);
+    new Button( gameElement, "the moon", moonTechItem, cashCounter, 1000000000);
   }
 
-  buildAThing(techItem: TechItem, cost: number, period: number, gain: number, name: string) : void {
+  buildAThing(techItem: TechItem, cost: number, period: number, gain: number, name: string, buttonText: string) : void {
     techItem.addBuildAction( () => {
       this.cashCounter.add(-1 * cost);
       var factory = new Robot(this.timeCounter, period, () => { this.cashCounter.add(gain); });
+      if( this.counts[name] == undefined ) {
+        this.counts[name] = 0;
+      }
       this.counts[name] += 1;
       this.messages.addMessage(`${name} #${this.counts[name]} built! It will make ${gain} dollars every ${period} seconds.`)
     });
+    new Button( this.gameElement, buttonText, techItem, this.cashCounter, cost);
   }
 
 }
