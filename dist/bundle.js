@@ -63,25 +63,48 @@
 	var Main = (function () {
 	    function Main() {
 	        var gameElement = document.getElementById("game");
+	        this.gameElement = gameElement;
 	        var timeCounter = new Counter_ts_1.Counter("seconds");
 	        timeCounter.attachElement(gameElement);
+	        this.timeCounter = timeCounter;
 	        var cashCounter = new Counter_ts_1.Counter("dollars");
+	        this.cashCounter = cashCounter;
 	        cashCounter.attachElement(gameElement);
 	        var messages = new Messages(gameElement);
+	        this.messages = messages;
+	        this.counts = {};
 	        setInterval(function () { timeCounter.add(1); }, 1000);
 	        var techItem = new TechItem_ts_1.TechItem([]);
 	        techItem.addBuildAction(function () { cashCounter.add(1); });
-	        var robotCount = 0;
-	        var robotTechItem = new TechItem_ts_1.TechItem([]);
-	        robotTechItem.addBuildAction(function () {
-	            cashCounter.add(-10);
-	            var robot = new Robot(timeCounter, 10, function () { cashCounter.add(2); });
-	            robotCount += 1;
-	            messages.addMessage("Robot #" + robotCount + " built! It will make 2 dollars every 10 seconds.");
-	        });
 	        var button = new Button(gameElement, "make a buck", techItem, cashCounter, 0);
-	        var robotButton = new Button(gameElement, "build a robot", robotTechItem, cashCounter, 10);
+	        var robotTechItem = new TechItem_ts_1.TechItem([]);
+	        this.buildAThing(robotTechItem, 10, 10, 2, "Robot", "build a robot");
+	        var doubleRobot = new TechItem_ts_1.TechItem([robotTechItem]);
+	        this.buildAThing(doubleRobot, 25, 18, 5, "Double robot", "double robot!");
+	        var factoryTechItem = new TechItem_ts_1.TechItem([robotTechItem]);
+	        this.buildAThing(factoryTechItem, 100, 100, 10, "Factory", "build a factory");
+	        var moonTechItem = new TechItem_ts_1.TechItem([robotTechItem, factoryTechItem]);
+	        moonTechItem.addBuildAction(function () {
+	            cashCounter.add(-1000000000);
+	            var msg = "YOU BOUGHT THE MOON! THERE IS NOTHING MORE IN LIFE.";
+	            alert(msg);
+	            messages.addMessage(msg);
+	        });
+	        new Button(gameElement, "the moon", moonTechItem, cashCounter, 1000000000);
 	    }
+	    Main.prototype.buildAThing = function (techItem, cost, period, gain, name, buttonText) {
+	        var _this = this;
+	        techItem.addBuildAction(function () {
+	            _this.cashCounter.add(-1 * cost);
+	            var factory = new Robot(_this.timeCounter, period, function () { _this.cashCounter.add(gain); });
+	            if (_this.counts[name] == undefined) {
+	                _this.counts[name] = 0;
+	            }
+	            _this.counts[name] += 1;
+	            _this.messages.addMessage(name + " #" + _this.counts[name] + " built! It will make " + gain + " dollars every " + period + " seconds.");
+	        });
+	        new Button(this.gameElement, buttonText, techItem, this.cashCounter, cost);
+	    };
 	    return Main;
 	}());
 	var Messages = (function () {
