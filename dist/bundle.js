@@ -74,21 +74,27 @@
 	        this.messages = messages;
 	        this.counts = {};
 	        setInterval(function () { timeCounter.add(1); }, 1000);
-	        var techItem = new TechItem_ts_1.TechItem([]);
-	        techItem.addBuildAction(function () { cashCounter.add(1); });
-	        var button = new Button(gameElement, "make a buck", techItem, cashCounter, 0);
+	        var george = new TechItem_ts_1.TechItem([]);
+	        george.addBuildAction(function () { cashCounter.add(1); });
+	        var button = new Button(gameElement, "make a buck", george, cashCounter, 0);
 	        var robotTechItem = new TechItem_ts_1.TechItem([]);
 	        this.buildAThing(robotTechItem, 10, 10, 2, "Robot", "build a robot"); // 2/10 = 0.20
 	        var doubleRobot = new TechItem_ts_1.TechItem([robotTechItem]);
-	        this.buildAThing(doubleRobot, 25, 18, 5, "Double robot", "double robot!"); // 5/18 = 0.28
+	        this.buildAThing(doubleRobot, 25, 6, 2, "Double robot", "double robot!"); // 2/6 = 0.33
 	        var factoryTechItem = new TechItem_ts_1.TechItem([robotTechItem]);
-	        this.buildAThing(factoryTechItem, 100, 100, 10, "Factory", "build a factory"); // 10/100 = 0.10
+	        this.buildAThing(factoryTechItem, 100, 100, 15, "Factory", "build a factory"); // 15/100 = 0.15
 	        var sweatshop = new TechItem_ts_1.TechItem([factoryTechItem]);
-	        this.buildAThing(sweatshop, 500, 50, 50, "Sweatshop", "sweatshop"); // 50/50 = 1
+	        this.buildAThing(sweatshop, 500, 28, 28, "Sweatshop", "sweatshop"); // 28/28 = 1.0
+	        var twodollar = new TechItem_ts_1.TechItem([sweatshop]);
+	        twodollar.addBuildAction(function () { cashCounter.add(2); });
+	        new Button(gameElement, "make two bucks; bank >=", twodollar, cashCounter, 1000); // ~250/10 = ~25.0
 	        var smallIsland = new TechItem_ts_1.TechItem([factoryTechItem]);
 	        this.buildAThing(smallIsland, 16000, 150, 2100, "Small island nation", "small island nation"); // 2100/150 = 14.0
 	        var govt = new TechItem_ts_1.TechItem([factoryTechItem]);
 	        this.buildAThing(govt, 100000, 3, 600, "Corrupt official", "bribe an official"); // 2100/3 = 200
+	        var benjamin = new TechItem_ts_1.TechItem([govt]);
+	        benjamin.addBuildAction(function () { cashCounter.add(100); });
+	        new Button(gameElement, "make a benjamin", benjamin, cashCounter, 0); // ~10000/10 = 1000.0
 	        var moonTechItem = new TechItem_ts_1.TechItem([robotTechItem, factoryTechItem]);
 	        moonTechItem.addBuildAction(function () {
 	            cashCounter.add(-1000000000);
@@ -158,10 +164,10 @@
 	    function Button(parent, name, itemToBuild, counter, cost) {
 	        var button = document.createElement("button");
 	        parent.appendChild(button);
-	        button.innerText = name + " ($" + cost + ")";
+	        button.innerText = name + " $" + cost;
 	        button.disabled = true;
 	        counter.subscribe(function (money) {
-	            if (money >= cost) {
+	            if (money >= cost && itemToBuild.canBuild()) {
 	                button.disabled = false;
 	            }
 	            else {
