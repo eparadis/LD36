@@ -77,9 +77,10 @@ class Messages {
   private textbox: HTMLElement;
   constructor( parent: HTMLElement) {
     this.messages = [];
-    var p = document.createElement("p");
+    var p = document.createElement("div");
+    p.id = "messages";
     parent.appendChild(p);
-    this.textbox = document.createElement("pre");
+    this.textbox = document.createElement("p");
     p.appendChild(this.textbox);
     this.addMessage("Nothing has happened yet...");
   }
