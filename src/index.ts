@@ -57,12 +57,12 @@ class Main
 
     var moonTechItem = new TechItem([robotTechItem, factoryTechItem]);
     moonTechItem.addBuildAction( () => {
-      cashCounter.add(-1000000000);
+      cashCounter.add(-1000000);
       var msg = "YOU BOUGHT THE MOON! THERE IS NOTHING MORE IN LIFE.";
       alert(msg);
       messages.addMessage(msg);
     });
-    new Button( gameElement, "the moon", moonTechItem, cashCounter, 1000000000);
+    new Button( gameElement, "the moon", moonTechItem, cashCounter, 1000000);
   }
 
   buildAThing(techItem: TechItem, cost: number, period: number, gain: number, name: string, buttonText: string) : void {
