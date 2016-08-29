@@ -14,6 +14,7 @@ button {
 div#messages {
     float: right;
     white-space: pre-line;
+    font-size: 14pt;
 }
 
 button[disabled=disabled], button:disabled {
