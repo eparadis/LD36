@@ -78,11 +78,17 @@
 	        techItem.addBuildAction(function () { cashCounter.add(1); });
 	        var button = new Button(gameElement, "make a buck", techItem, cashCounter, 0);
 	        var robotTechItem = new TechItem_ts_1.TechItem([]);
-	        this.buildAThing(robotTechItem, 10, 10, 2, "Robot", "build a robot");
+	        this.buildAThing(robotTechItem, 10, 10, 2, "Robot", "build a robot"); // 2/10 = 0.20
 	        var doubleRobot = new TechItem_ts_1.TechItem([robotTechItem]);
-	        this.buildAThing(doubleRobot, 25, 18, 5, "Double robot", "double robot!");
+	        this.buildAThing(doubleRobot, 25, 18, 5, "Double robot", "double robot!"); // 5/18 = 0.28
 	        var factoryTechItem = new TechItem_ts_1.TechItem([robotTechItem]);
-	        this.buildAThing(factoryTechItem, 100, 100, 10, "Factory", "build a factory");
+	        this.buildAThing(factoryTechItem, 100, 100, 10, "Factory", "build a factory"); // 10/100 = 0.10
+	        var sweatshop = new TechItem_ts_1.TechItem([factoryTechItem]);
+	        this.buildAThing(sweatshop, 500, 50, 50, "Sweatshop", "sweatshop"); // 50/50 = 1
+	        var smallIsland = new TechItem_ts_1.TechItem([factoryTechItem]);
+	        this.buildAThing(smallIsland, 16000, 150, 2100, "Small island nation", "small island nation"); // 2100/150 = 14.0
+	        var govt = new TechItem_ts_1.TechItem([factoryTechItem]);
+	        this.buildAThing(govt, 100000, 3, 600, "Corrupt official", "bribe an official"); // 2100/3 = 200
 	        var moonTechItem = new TechItem_ts_1.TechItem([robotTechItem, factoryTechItem]);
 	        moonTechItem.addBuildAction(function () {
 	            cashCounter.add(-1000000000);
@@ -110,9 +116,10 @@
 	var Messages = (function () {
 	    function Messages(parent) {
 	        this.messages = [];
-	        var p = document.createElement("p");
+	        var p = document.createElement("div");
+	        p.id = "messages";
 	        parent.appendChild(p);
-	        this.textbox = document.createElement("pre");
+	        this.textbox = document.createElement("p");
 	        p.appendChild(this.textbox);
 	        this.addMessage("Nothing has happened yet...");
 	    }
