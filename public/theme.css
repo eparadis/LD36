@@ -1,0 +1,10 @@
+body {
+  font-size: 16pt;
+}
+
+button {
+  display: block;
+  width: 300px;
+  font-size: 12pt;
+}
+
