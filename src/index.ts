@@ -30,13 +30,22 @@ class Main
     var button = new Button(gameElement, "make a buck", techItem, cashCounter, 0);
 
     var robotTechItem = new TechItem([]); 
-    this.buildAThing(robotTechItem, 10, 10, 2, "Robot", "build a robot");
+    this.buildAThing(robotTechItem, 10, 10, 2, "Robot", "build a robot"); // 2/10 = 0.20
 
     var doubleRobot = new TechItem([robotTechItem]);
-    this.buildAThing(doubleRobot, 25, 18, 5, "Double robot", "double robot!");
+    this.buildAThing(doubleRobot, 25, 18, 5, "Double robot", "double robot!"); // 5/18 = 0.28
 
     var factoryTechItem = new TechItem([robotTechItem]);
-    this.buildAThing(factoryTechItem, 100, 100, 10, "Factory", "build a factory");
+    this.buildAThing(factoryTechItem, 100, 100, 10, "Factory", "build a factory"); // 10/100 = 0.10
+
+    var sweatshop = new TechItem([factoryTechItem]);
+    this.buildAThing(sweatshop, 500, 50, 50, "Sweatshop", "sweatshop"); // 50/50 = 1
+
+    var smallIsland = new TechItem([factoryTechItem]);
+    this.buildAThing(smallIsland, 16000, 150, 2100, "Small island nation", "small island nation"); // 2100/150 = 14.0
+
+    var govt = new TechItem([factoryTechItem]);
+    this.buildAThing(govt, 100000, 3, 600, "Corrupt official", "bribe an official"); // 2100/3 = 200
 
     var moonTechItem = new TechItem([robotTechItem, factoryTechItem]);
     moonTechItem.addBuildAction( () => {
