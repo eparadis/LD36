@@ -25,27 +25,35 @@ class Main
 
     setInterval( () => {timeCounter.add(1);}, 1000);
 
-    var techItem = new TechItem([]);
-    techItem.addBuildAction( () => { cashCounter.add(1); });
-    var button = new Button(gameElement, "make a buck", techItem, cashCounter, 0);
+    var george = new TechItem([]);
+    george.addBuildAction( () => { cashCounter.add(1); });
+    var button = new Button(gameElement, "make a buck", george, cashCounter, 0);
 
     var robotTechItem = new TechItem([]); 
     this.buildAThing(robotTechItem, 10, 10, 2, "Robot", "build a robot"); // 2/10 = 0.20
 
     var doubleRobot = new TechItem([robotTechItem]);
-    this.buildAThing(doubleRobot, 25, 18, 5, "Double robot", "double robot!"); // 5/18 = 0.28
+    this.buildAThing(doubleRobot, 25, 6, 2, "Double robot", "double robot!"); // 2/6 = 0.33
 
     var factoryTechItem = new TechItem([robotTechItem]);
-    this.buildAThing(factoryTechItem, 100, 100, 10, "Factory", "build a factory"); // 10/100 = 0.10
+    this.buildAThing(factoryTechItem, 100, 100, 25, "Factory", "build a factory"); // 25/100 = 0.25
 
     var sweatshop = new TechItem([factoryTechItem]);
-    this.buildAThing(sweatshop, 500, 50, 50, "Sweatshop", "sweatshop"); // 50/50 = 1
+    this.buildAThing(sweatshop, 500, 28, 28, "Sweatshop", "sweatshop"); // 28/28 = 1.0
+
+    var twodollar = new TechItem([sweatshop]);
+    twodollar.addBuildAction( () => { cashCounter.add(2); });
+    new Button(gameElement, "make two bucks; bank >=", twodollar, cashCounter, 1000);  // ~250/10 = ~25.0
 
     var smallIsland = new TechItem([factoryTechItem]);
-    this.buildAThing(smallIsland, 16000, 150, 2100, "Small island nation", "small island nation"); // 2100/150 = 14.0
+    this.buildAThing(smallIsland, 16000, 13, 210, "Small island nation", "small island nation"); // 210/13 = 16.2
 
     var govt = new TechItem([factoryTechItem]);
     this.buildAThing(govt, 100000, 3, 600, "Corrupt official", "bribe an official"); // 2100/3 = 200
+
+    var benjamin = new TechItem([govt]);
+    benjamin.addBuildAction( () => { cashCounter.add(100); });
+    new Button(gameElement, "make a benjamin", benjamin, cashCounter, 0); // ~10000/10 = 1000.0
 
     var moonTechItem = new TechItem([robotTechItem, factoryTechItem]);
     moonTechItem.addBuildAction( () => {
@@ -123,10 +131,10 @@ class Button {
   constructor( parent: HTMLElement, name: string, itemToBuild: TechItem, counter: Counter, cost: number) {
     var button = document.createElement("button");
     parent.appendChild(button);
-    button.innerText = `${name} ($${cost})`;
+    button.innerText = `${name} $${cost}`;
     button.disabled = true;
     counter.subscribe( (money) => {
-      if( money >= cost) {
+      if( money >= cost && itemToBuild.canBuild()) {
         button.disabled = false;
       } else {
         button.disabled = true;
